@@ -1,0 +1,209 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: hsl(0 0% 3.9%); /* deep navy */
+  --foreground: hsl(0 0% 98%); /* near-white for text */
+  --card: hsl(0 0% 3.9%); /* slightly raised neutral */
+  --card-foreground: #e6f1ff;
+  --popover: hsl(0 0% 3.9%);
+  --popover-foreground: #e6f1ff;
+
+  --primary: hsl(0 72.2% 50.6%); /* neon cyan (primary brand color) */
+  --primary-foreground: #0b1020;
+
+  --secondary: hsl(0 0% 14.9%); /* neutral surface */
+  --secondary-foreground: #e6f1ff;
+
+  --muted: hsl(0 0% 14.9%);
+  --muted-foreground: #a7b3c7;
+
+  --accent: hsl(0 0% 14.9%); /* purple accent */
+  --accent-foreground: #0b1020;
+
+  --destructive: hsl(0 62.8% 30.6%); /* keep distinct for errors */
+  --destructive-foreground: #0b1020;
+
+  --border: hsl(0 0% 14.9%);
+  --input: hsl(0 0% 14.9%);
+  --ring: hsl(0 72.2% 50.6%); /* ring uses primary */
+
+  --chart-1: hsl(0 72.2% 50.6%);
+  --chart-2: hsl(12 76% 61%);
+  --chart-3: hsl(25 83% 53%); /* mint as second accent (allowed within 5 total colors) */
+  --chart-4: hsl(349 89% 60%);
+  --chart-5: hsl(320 65% 52%);
+
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: #e6f1ff;
+  --sidebar-primary: #00ffff;
+  --sidebar-primary-foreground: #0b1020;
+  --sidebar-accent: #8b5cf6;
+  --sidebar-accent-foreground: #0b1020;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #00ffff;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    scroll-behavior: smooth; /* smooth scrolling */
+  }
+}
+
+@layer utilities {
+  .neon-glow {
+    box-shadow: 0 0 0 1px var(--color-ring), 0 0 18px var(--color-ring), 0 0 40px
+      color-mix(in oklab, var(--color-ring), transparent 50%);
+  }
+  .glass {
+    background: color-mix(in oklab, var(--color-card), transparent 70%);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border);
+  }
+  .glow-border:hover {
+    box-shadow: 0 0 0 1px var(--color-ring), 0 0 24px var(--color-ring);
+  }
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--color-ring);
+    border-radius: 9999px;
+    pointer-events: none;
+    transform: translate3d(-50%, -50%, 0);
+    box-shadow: 0 0 12px color-mix(in oklab, var(--color-ring), transparent 40%), inset 0 0 8px
+      color-mix(in oklab, var(--color-ring), transparent 70%);
+    transition: width 0.15s ease, height 0.15s ease, opacity 0.2s ease;
+    z-index: 50;
+    mix-blend-mode: screen;
+  }
+  .canvas-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in oklab, var(--color-ring), transparent 60%);
+  }
+  50% {
+    box-shadow: 0 0 24px 2px color-mix(in oklab, var(--color-ring), transparent 10%);
+  }
+}
+.pulse-glow {
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+
+.section {
+  @apply max-w-6xl mx-auto px-4 md:px-6;
+}
+
+@keyframes bg-shift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -2%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+.hero-bg {
+  background: radial-gradient(
+      800px 400px at 20% 20%,
+      color-mix(in oklab, var(--color-ring), transparent 65%),
+      transparent
+    ), radial-gradient(600px 300px at 80% 30%, color-mix(in oklab, var(--color-accent), transparent 65%), transparent),
+    linear-gradient(180deg, #0f0c29, #302b63, #24243e);
+  filter: blur(40px) saturate(120%);
+  animation: bg-shift 12s ease-in-out infinite;
+}
