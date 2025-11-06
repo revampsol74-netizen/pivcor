@@ -5,20 +5,25 @@
 [build.environment]
   NODE_VERSION = "20"
   PNPM_VERSION = "10"
+  NEXT_TELEMETRY_DISABLED = "1"
 
-# Next.js redirects and rewrites
+# Next.js runtime plugin (handles routing automatically)
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Redirects for Next.js routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# API routes
+# API routes - Next.js plugin handles this, but keeping as fallback
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
 
-# Next.js image optimization
+# Next.js image optimization caching
 [[headers]]
   for = "/_next/image/*"
   [headers.values]
