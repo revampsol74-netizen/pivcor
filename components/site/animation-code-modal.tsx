@@ -16,10 +16,13 @@ export function AnimationCodeModal({ isOpen, onClose }: AnimationCodeModalProps)
   const animationCode = `"use client"
 
 import { Canvas } from "@react-three/fiber"
+
 import { Environment, OrbitControls } from "@react-three/drei"
+
 import dynamic from "next/dynamic"
 
 const HologramOrb = dynamic(() => import("@/components/three/hologram-orb").then((m) => m.HologramOrb), { ssr: false })
+
 const NeonNetwork = dynamic(() => import("@/components/three/neon-network").then((m) => m.NeonNetwork), { ssr: false })
 
 export function HeroAnimation() {

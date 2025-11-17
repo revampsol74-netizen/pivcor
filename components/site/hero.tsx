@@ -1,9 +1,5 @@
 "use client"
-import dynamic from "next/dynamic"
 import { AnimationViewer } from "./animation-viewer"
-
-const HologramOrb = dynamic(() => import("@/components/three/hologram-orb").then((m) => m.HologramOrb), { ssr: false })
-const NeonNetwork = dynamic(() => import("@/components/three/neon-network").then((m) => m.NeonNetwork), { ssr: false })
 
 export function Hero() {
   return (

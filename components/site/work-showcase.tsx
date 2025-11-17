@@ -34,7 +34,7 @@ export function WorkShowcase() {
     {
       title: "Mindspace: A Multi-Tenant SaaS Platform",
       description: "A complex, multi-tenant SaaS application for project management and team productivity, built on a scalable cloud architecture to support thousands of concurrent users.",
-      videoId: "wDLPCzgrgiw",
+      videoId: "HjaKI30cyo8",
       videoDuration: "",
     },
   ]

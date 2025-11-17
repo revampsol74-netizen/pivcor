@@ -2,9 +2,8 @@ import type React from "react"
 import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
-import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
-import ChatWidget from "@/components/chat/chat-widget"
+import Chatbot from "@/components/chat/Chatbot"
 import { SuppressHydrationAttributes } from "@/components/suppress-hydration"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
@@ -27,8 +26,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`dark ${GeistSans.variable} ${GeistMono.variable} antialiased`} suppressHydrationWarning>
-      <head>
+      <head suppressHydrationWarning>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8598DQG4ZP"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-8598DQG4ZP');
+            `,
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -37,7 +48,7 @@ export default function RootLayout({
                 var extensionPatterns = [/^bis_/, /^__processed_/, /^__reactInternal/];
                 function removeAttrs() {
                   try {
-                    var root = document.body || document.documentElement;
+                    var root = document.documentElement || document.body;
                     if (!root) return;
                     var walker = document.createTreeWalker(
                       root,
@@ -68,20 +79,57 @@ export default function RootLayout({
                     }
                   } catch(e) {}
                 }
-                function initCleanup() {
-                  if (document.body) {
-                    removeAttrs();
-                    setTimeout(removeAttrs, 0);
-                    setTimeout(removeAttrs, 10);
-                    setTimeout(removeAttrs, 50);
+                // Use MutationObserver to catch attributes added dynamically
+                var observer = null;
+                if (typeof MutationObserver !== 'undefined') {
+                  observer = new MutationObserver(function(mutations) {
+                    var shouldClean = false;
+                    mutations.forEach(function(mutation) {
+                      if (mutation.type === 'attributes') {
+                        var attrName = mutation.attributeName;
+                        if (attrName && extensionPatterns.some(function(p) { return p.test(attrName); })) {
+                          shouldClean = true;
+                        }
+                      } else if (mutation.type === 'childList') {
+                        shouldClean = true;
+                      }
+                    });
+                    if (shouldClean) {
+                      removeAttrs();
+                    }
+                  });
+                }
+                
+                function startObserving() {
+                  if (observer && document.documentElement) {
+                    observer.observe(document.documentElement, {
+                      attributes: true,
+                      subtree: true,
+                      childList: true,
+                      attributeFilter: null
+                    });
                   }
                 }
+                
+                // Run immediately and multiple times to catch attributes injected at different times
+                removeAttrs();
                 if (document.readyState === 'loading') {
                   if (document.addEventListener) {
-                    document.addEventListener('DOMContentLoaded', initCleanup, false);
+                    document.addEventListener('DOMContentLoaded', function() {
+                      removeAttrs();
+                      setTimeout(removeAttrs, 0);
+                      setTimeout(removeAttrs, 10);
+                      setTimeout(removeAttrs, 50);
+                      startObserving();
+                    }, false);
                   }
+                  startObserving();
                 } else {
-                  initCleanup();
+                  removeAttrs();
+                  setTimeout(removeAttrs, 0);
+                  setTimeout(removeAttrs, 10);
+                  setTimeout(removeAttrs, 50);
+                  startObserving();
                 }
               })();
             `,
@@ -93,9 +141,8 @@ export default function RootLayout({
         <div suppressHydrationWarning>
           <Suspense fallback={null}>{children}</Suspense>
         </div>
-        <ChatWidget />
+        <Chatbot />
         <Toaster />
-        <Analytics />
       </body>
     </html>
   )
